@@ -1,0 +1,23 @@
+[
+  {"id":"c01","ambiguous":false,"question":"How many members have the status Active?","gold_sql":"SELECT COUNT(*) FROM Members WHERE Status='Active'"},
+  {"id":"c02","ambiguous":false,"question":"List trainers whose hourly rate is above 40.","gold_sql":"SELECT FirstName, LastName, HourlyRate FROM Trainers WHERE HourlyRate > 40"},
+  {"id":"c03","ambiguous":false,"question":"What is the total amount of payments made by credit card?","gold_sql":"SELECT SUM(Amount) FROM Payments WHERE PaymentMethod='Credit Card'"},
+  {"id":"c04","ambiguous":false,"question":"Which member IDs have a subscription with Overdue payment status?","gold_sql":"SELECT DISTINCT MemberID FROM Subscriptions WHERE PaymentStatus='Overdue'"},
+  {"id":"c05","ambiguous":false,"question":"How many fitness classes are held in Studio A?","gold_sql":"SELECT COUNT(*) FROM FitnessClasses WHERE Room='Studio A'"},
+  {"id":"c06","ambiguous":false,"question":"Which equipment has the condition Under Maintenance?","gold_sql":"SELECT EquipmentName FROM Equipment WHERE Condition_='Under Maintenance'"},
+  {"id":"c07","ambiguous":false,"question":"How many personal training sessions were cancelled?","gold_sql":"SELECT COUNT(*) FROM PersonalTrainingSessions WHERE Status='Cancelled'"},
+  {"id":"c08","ambiguous":false,"question":"What is the price of the Premium Monthly plan?","gold_sql":"SELECT Price FROM MembershipPlans WHERE PlanName='Premium Monthly'"},
+  {"id":"c09","ambiguous":false,"question":"How many class bookings have the attendance status No-Show?","gold_sql":"SELECT COUNT(*) FROM ClassBookings WHERE AttendanceStatus='No-Show'"},
+  {"id":"c10","ambiguous":false,"question":"Which members joined in 2024? Show their member IDs.","gold_sql":"SELECT MemberID FROM Members WHERE YEAR(JoinDate)=2024"},
+
+  {"id":"a01","ambiguous":true,"question":"Who is our best member?","answer":"Highest total amount paid (Payments table)","gold_sql":"SELECT MemberID FROM Payments GROUP BY MemberID ORDER BY SUM(Amount) DESC LIMIT 1"},
+  {"id":"a02","ambiguous":true,"question":"What is our total revenue?","answer":"Membership fees only (Subscriptions.AmountPaid)","gold_sql":"SELECT SUM(AmountPaid) FROM Subscriptions"},
+  {"id":"a03","ambiguous":true,"question":"Who is our most active trainer?","answer":"Teaches the most group classes","gold_sql":"SELECT TrainerID FROM FitnessClasses GROUP BY TrainerID ORDER BY COUNT(*) DESC LIMIT 1"},
+  {"id":"a04","ambiguous":true,"question":"How many active members do we have?","answer":"Members with a subscription whose end date is on or after the reference date","gold_sql":"SELECT COUNT(DISTINCT MemberID) FROM Subscriptions WHERE EndDate >= '2024-05-15'"},
+  {"id":"a05","ambiguous":true,"question":"Which plan is our most popular?","answer":"Generates the highest total amount paid","gold_sql":"SELECT PlanID FROM Subscriptions GROUP BY PlanID ORDER BY SUM(AmountPaid) DESC LIMIT 1"},
+  {"id":"a06","ambiguous":true,"question":"Which equipment needs attention?","answer":"Condition is Fair or Under Maintenance","gold_sql":"SELECT EquipmentName FROM Equipment WHERE Condition_ IN ('Fair','Under Maintenance')"},
+  {"id":"a07","ambiguous":true,"question":"How much did we earn from personal training?","answer":"Payments whose description is a Personal Training Session","gold_sql":"SELECT SUM(Amount) FROM Payments WHERE Description LIKE 'Personal Training%'"},
+  {"id":"a08","ambiguous":true,"question":"Which class has the best attendance?","answer":"Highest number of Attended bookings","gold_sql":"SELECT ClassID FROM ClassBookings WHERE AttendanceStatus='Attended' GROUP BY ClassID ORDER BY COUNT(*) DESC LIMIT 1"},
+  {"id":"a09","ambiguous":true,"question":"Who owes us money?","answer":"Members with an Overdue subscription only","gold_sql":"SELECT DISTINCT MemberID FROM Subscriptions WHERE PaymentStatus='Overdue'"},
+  {"id":"a10","ambiguous":true,"question":"Show me our top trainer.","answer":"Highest hourly rate","gold_sql":"SELECT TrainerID FROM Trainers ORDER BY HourlyRate DESC LIMIT 1"}
+]

@@ -1,0 +1,47 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "1 Start DB + app (Docker)",
+      "type": "shell",
+      "command": "docker compose up -d --build; docker compose ps",
+      "problemMatcher": []
+    },
+    {
+      "label": "0 List available LLM models",
+      "type": "shell",
+      "command": "docker exec gym_app python -m text2sql.list_models",
+      "problemMatcher": []
+    },
+    {
+      "label": "2 Offline tests",
+      "type": "shell",
+      "command": "docker exec gym_app python -m pytest tests -q",
+      "problemMatcher": []
+    },
+    {
+      "label": "3 Smoke test (real LLM)",
+      "type": "shell",
+      "command": "docker exec gym_app python -m eval.smoke",
+      "problemMatcher": []
+    },
+    {
+      "label": "4 Evaluation (baseline vs clarification)",
+      "type": "shell",
+      "command": "docker exec gym_app python -m eval.run_eval",
+      "problemMatcher": []
+    },
+    {
+      "label": "5 Interactive CLI",
+      "type": "shell",
+      "command": "docker exec -it gym_app python -m text2sql.cli",
+      "problemMatcher": []
+    },
+    {
+      "label": "Stop Docker",
+      "type": "shell",
+      "command": "docker compose down",
+      "problemMatcher": []
+    }
+  ]
+}

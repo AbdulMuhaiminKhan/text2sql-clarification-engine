@@ -1,0 +1,35 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: gym_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-change-me}
+      MYSQL_DATABASE: GymManagementDB
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./sql/gym.sql:/docker-entrypoint-initdb.d/gym.sql
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p$$MYSQL_ROOT_PASSWORD"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  app:
+    build: .
+    container_name: gym_app
+    depends_on:
+      mysql:
+        condition: service_healthy
+    env_file: .env
+    environment:
+      DATABASE_URL: mysql+pymysql://root:${MYSQL_ROOT_PASSWORD:-change-me}@mysql:3306/GymManagementDB
+      REFERENCE_DATE: ${REFERENCE_DATE:-2024-05-15}
+    volumes:
+      - .:/app
+    stdin_open: true
+    tty: true
+
+volumes:
+  mysql_data:

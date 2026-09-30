@@ -1,0 +1,286 @@
+{
+  "baseline": [
+    {
+      "id": "c01",
+      "ambiguous": false,
+      "asked": false,
+      "correct": true,
+      "sql": "SELECT COUNT(*) AS ActiveMemberCount FROM Members WHERE Status = 'Active';"
+    },
+    {
+      "id": "c02",
+      "ambiguous": false,
+      "asked": false,
+      "correct": true,
+      "sql": "SELECT TrainerID, FirstName, LastName, HourlyRate FROM Trainers WHERE HourlyRate > 40;"
+    },
+    {
+      "id": "c03",
+      "ambiguous": false,
+      "asked": false,
+      "correct": true,
+      "sql": "SELECT SUM(Amount) AS TotalCreditCardPayments FROM Payments WHERE PaymentMethod = 'Credit Card';"
+    },
+    {
+      "id": "c04",
+      "ambiguous": false,
+      "asked": false,
+      "correct": true,
+      "sql": "SELECT DISTINCT MemberID FROM Subscriptions WHERE PaymentStatus = 'Overdue';"
+    },
+    {
+      "id": "c05",
+      "ambiguous": false,
+      "asked": false,
+      "correct": true,
+      "sql": "SELECT COUNT(*) AS class_count FROM FitnessClasses WHERE Room = 'Studio A';"
+    },
+    {
+      "id": "c06",
+      "ambiguous": false,
+      "asked": false,
+      "correct": true,
+      "sql": "SELECT EquipmentID, EquipmentName, Category, PurchaseDate, Condition_, LastMaintained, Location FROM Equipment WHERE Condition_ = 'Under Maintenance';"
+    },
+    {
+      "id": "c07",
+      "ambiguous": false,
+      "asked": false,
+      "correct": true,
+      "sql": "SELECT COUNT(*) AS CancelledSessions FROM PersonalTrainingSessions WHERE Status = 'Cancelled';"
+    },
+    {
+      "id": "c08",
+      "ambiguous": false,
+      "asked": false,
+      "correct": true,
+      "sql": "SELECT Price FROM MembershipPlans WHERE PlanName = 'Premium Monthly';"
+    },
+    {
+      "id": "c09",
+      "ambiguous": false,
+      "asked": false,
+      "correct": true,
+      "sql": "SELECT COUNT(*) AS NoShowCount FROM ClassBookings WHERE AttendanceStatus = 'No-Show';"
+    },
+    {
+      "id": "c10",
+      "ambiguous": false,
+      "asked": false,
+      "correct": true,
+      "sql": "SELECT MemberID FROM Members WHERE YEAR(JoinDate) = 2024;"
+    },
+    {
+      "id": "a01",
+      "ambiguous": true,
+      "asked": false,
+      "correct": false,
+      "sql": "SELECT m.MemberID, m.FirstName, m.LastName, COUNT(*) AS AttendedClassesCount\nFROM ClassBookings cb\nJOIN Members m ON cb.MemberID = m.MemberID\nWHERE cb.AttendanceStatus = 'Attended'\nGROUP BY m.MemberID, m.FirstName, m.LastName\nORDER BY AttendedClassesCount DESC\nLIMIT 1;"
+    },
+    {
+      "id": "a02",
+      "ambiguous": true,
+      "asked": false,
+      "correct": false,
+      "sql": "SELECT (SELECT COALESCE(SUM(Amount),0) FROM Payments) + (SELECT COALESCE(SUM(AmountPaid),0) FROM Subscriptions) AS TotalRevenue;"
+    },
+    {
+      "id": "a03",
+      "ambiguous": true,
+      "asked": false,
+      "correct": true,
+      "sql": "SELECT t.TrainerID, t.FirstName, t.LastName, COUNT(*) AS class_count FROM Trainers t JOIN FitnessClasses fc ON t.TrainerID = fc.TrainerID GROUP BY t.TrainerID ORDER BY class_count DESC LIMIT 1;"
+    },
+    {
+      "id": "a04",
+      "ambiguous": true,
+      "asked": false,
+      "correct": false,
+      "sql": "SELECT COUNT(*) AS ActiveMemberCount FROM Members WHERE Status = 'Active';"
+    },
+    {
+      "id": "a05",
+      "ambiguous": true,
+      "asked": false,
+      "correct": false,
+      "sql": "SELECT mp.PlanName, COUNT(*) AS subscription_count FROM Subscriptions s JOIN MembershipPlans mp ON s.PlanID = mp.PlanID GROUP BY mp.PlanID, mp.PlanName ORDER BY subscription_count DESC LIMIT 1;"
+    },
+    {
+      "id": "a06",
+      "ambiguous": true,
+      "asked": false,
+      "correct": false,
+      "sql": "SELECT EquipmentID, EquipmentName, Condition_, LastMaintained, Location FROM Equipment WHERE Condition_ <> 'Excellent';"
+    },
+    {
+      "id": "a07",
+      "ambiguous": true,
+      "asked": false,
+      "correct": true,
+      "sql": "SELECT SUM((pts.DurationMinutes/60.0) * t.HourlyRate) AS TotalPersonalTrainingEarnings\nFROM PersonalTrainingSessions pts\nJOIN Trainers t ON pts.TrainerID = t.TrainerID\nWHERE pts.Status = 'Completed';"
+    },
+    {
+      "id": "a08",
+      "ambiguous": true,
+      "asked": false,
+      "correct": false,
+      "sql": "SELECT fc.ClassName, COUNT(*) AS AttendanceCount FROM ClassBookings cb JOIN FitnessClasses fc ON cb.ClassID = fc.ClassID WHERE cb.AttendanceStatus = 'Attended' GROUP BY fc.ClassID, fc.ClassName ORDER BY AttendanceCount DESC LIMIT 1;"
+    },
+    {
+      "id": "a09",
+      "ambiguous": true,
+      "asked": false,
+      "correct": false,
+      "sql": "SELECT m.MemberID, m.FirstName, m.LastName, m.Email, s.PlanID, s.PaymentStatus FROM Members m JOIN Subscriptions s ON m.MemberID = s.MemberID WHERE s.PaymentStatus IN ('Pending', 'Overdue');"
+    },
+    {
+      "id": "a10",
+      "ambiguous": true,
+      "asked": false,
+      "correct": false,
+      "sql": "SELECT t.TrainerID, t.FirstName, t.LastName, COUNT(fc.ClassID) AS ClassCount\nFROM Trainers t\nJOIN FitnessClasses fc ON t.TrainerID = fc.TrainerID\nGROUP BY t.TrainerID, t.FirstName, t.LastName\nORDER BY ClassCount DESC\nLIMIT 1;"
+    }
+  ],
+  "engine": [
+    {
+      "id": "c01",
+      "ambiguous": false,
+      "asked": false,
+      "correct": true,
+      "sql": "SELECT COUNT(*) AS ActiveMemberCount FROM Members WHERE Status = 'Active';"
+    },
+    {
+      "id": "c02",
+      "ambiguous": false,
+      "asked": false,
+      "correct": true,
+      "sql": "SELECT TrainerID, FirstName, LastName, HourlyRate FROM Trainers WHERE HourlyRate > 40;"
+    },
+    {
+      "id": "c03",
+      "ambiguous": false,
+      "asked": false,
+      "correct": true,
+      "sql": "SELECT SUM(Amount) AS TotalCreditCardPayments FROM Payments WHERE PaymentMethod = 'Credit Card';"
+    },
+    {
+      "id": "c04",
+      "ambiguous": false,
+      "asked": false,
+      "correct": true,
+      "sql": "SELECT DISTINCT MemberID FROM Subscriptions WHERE PaymentStatus = 'Overdue';"
+    },
+    {
+      "id": "c05",
+      "ambiguous": false,
+      "asked": false,
+      "correct": true,
+      "sql": "SELECT COUNT(*) AS ClassCount FROM FitnessClasses WHERE Room = 'Studio A';"
+    },
+    {
+      "id": "c06",
+      "ambiguous": false,
+      "asked": false,
+      "correct": true,
+      "sql": "SELECT EquipmentID, EquipmentName, Category, PurchaseDate, Condition_, LastMaintained, Location FROM Equipment WHERE Condition_ = 'Under Maintenance';"
+    },
+    {
+      "id": "c07",
+      "ambiguous": false,
+      "asked": false,
+      "correct": true,
+      "sql": "SELECT COUNT(*) AS CancelledSessions FROM PersonalTrainingSessions WHERE Status = 'Cancelled';"
+    },
+    {
+      "id": "c08",
+      "ambiguous": false,
+      "asked": false,
+      "correct": true,
+      "sql": "SELECT Price FROM MembershipPlans WHERE PlanName = 'Premium Monthly';"
+    },
+    {
+      "id": "c09",
+      "ambiguous": false,
+      "asked": false,
+      "correct": true,
+      "sql": "SELECT COUNT(*) AS NoShowCount FROM ClassBookings WHERE AttendanceStatus = 'No-Show';"
+    },
+    {
+      "id": "c10",
+      "ambiguous": false,
+      "asked": false,
+      "correct": true,
+      "sql": "SELECT MemberID FROM Members WHERE YEAR(JoinDate) = 2024;"
+    },
+    {
+      "id": "a01",
+      "ambiguous": true,
+      "asked": true,
+      "correct": true,
+      "sql": "SELECT m.MemberID, m.FirstName, m.LastName, SUM(p.Amount) AS TotalPaid\nFROM Members m\nJOIN Payments p ON m.MemberID = p.MemberID\nGROUP BY m.MemberID, m.FirstName, m.LastName\nORDER BY TotalPaid DESC\nLIMIT 1;"
+    },
+    {
+      "id": "a02",
+      "ambiguous": true,
+      "asked": true,
+      "correct": false,
+      "sql": "SELECT COALESCE(SUM(AmountPaid), 0) AS TotalRevenue FROM Subscriptions WHERE PaymentStatus = 'Paid';"
+    },
+    {
+      "id": "a03",
+      "ambiguous": true,
+      "asked": true,
+      "correct": true,
+      "sql": "SELECT t.TrainerID, t.FirstName, t.LastName, COUNT(fc.ClassID) AS ClassCount\nFROM Trainers t\nJOIN FitnessClasses fc ON t.TrainerID = fc.TrainerID\nGROUP BY t.TrainerID, t.FirstName, t.LastName\nORDER BY ClassCount DESC\nLIMIT 1;"
+    },
+    {
+      "id": "a04",
+      "ambiguous": true,
+      "asked": true,
+      "correct": true,
+      "sql": "SELECT COUNT(DISTINCT MemberID) AS ActiveMemberCount FROM Subscriptions WHERE EndDate >= '2024-05-15';"
+    },
+    {
+      "id": "a05",
+      "ambiguous": true,
+      "asked": true,
+      "correct": true,
+      "sql": "SELECT p.PlanID, p.PlanName, SUM(s.AmountPaid) AS TotalPaid\nFROM MembershipPlans p\nJOIN Subscriptions s ON p.PlanID = s.PlanID\nWHERE s.PaymentStatus = 'Paid'\nGROUP BY p.PlanID, p.PlanName\nORDER BY TotalPaid DESC\nLIMIT 1;"
+    },
+    {
+      "id": "a06",
+      "ambiguous": true,
+      "asked": true,
+      "correct": true,
+      "sql": "SELECT EquipmentID, EquipmentName, Category, Condition_, LastMaintained, Location FROM Equipment WHERE Condition_ IN ('Fair', 'Under Maintenance');"
+    },
+    {
+      "id": "a07",
+      "ambiguous": true,
+      "asked": true,
+      "correct": true,
+      "sql": "SELECT SUM(Amount) AS TotalPersonalTrainingRevenue FROM Payments WHERE Description LIKE '%Personal Training%';"
+    },
+    {
+      "id": "a08",
+      "ambiguous": true,
+      "asked": true,
+      "correct": true,
+      "sql": "SELECT fc.ClassID, fc.ClassName, COUNT(*) AS AttendanceCount\nFROM ClassBookings cb\nJOIN FitnessClasses fc ON cb.ClassID = fc.ClassID\nWHERE cb.AttendanceStatus = 'Attended'\nGROUP BY fc.ClassID, fc.ClassName\nORDER BY AttendanceCount DESC\nLIMIT 1;"
+    },
+    {
+      "id": "a09",
+      "ambiguous": true,
+      "asked": true,
+      "correct": true,
+      "sql": "SELECT DISTINCT m.MemberID, m.FirstName, m.LastName, m.Email\nFROM Members m\nJOIN Subscriptions s ON m.MemberID = s.MemberID\nWHERE s.PaymentStatus = 'Overdue';"
+    },
+    {
+      "id": "a10",
+      "ambiguous": true,
+      "asked": true,
+      "correct": true,
+      "sql": "SELECT TrainerID, FirstName, LastName, HourlyRate FROM Trainers ORDER BY HourlyRate DESC LIMIT 1;"
+    }
+  ]
+}
