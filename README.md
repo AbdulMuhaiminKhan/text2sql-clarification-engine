@@ -1,6 +1,6 @@
 # Text-to-SQL Clarification Engine
 
-[![tests](https://github.com/OWNER/text2sql-clarification-engine/actions/workflows/tests.yml/badge.svg)](https://github.com/OWNER/text2sql-clarification-engine/actions/workflows/tests.yml)
+[![tests](https://github.com/AbdulMuhaiminKhan/text2sql-clarification-engine/actions/workflows/tests.yml/badge.svg)](https://github.com/AbdulMuhaiminKhan/text2sql-clarification-engine/actions/workflows/tests.yml)
 ![Python](https://img.shields.io/badge/python-3.11-blue)
 ![License: MIT](https://img.shields.io/badge/license-MIT-green)
 
@@ -98,7 +98,7 @@ text2sql-clarification-engine/
 ## Installation
 
 ```bash
-git clone https://github.com/OWNER/text2sql-clarification-engine.git
+git clone https://github.com/AbdulMuhaiminKhan/text2sql-clarification-engine.git
 cd text2sql-clarification-engine
 cp .env.example .env        # Windows PowerShell: copy .env.example .env
 ```
